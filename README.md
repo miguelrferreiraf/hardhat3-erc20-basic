@@ -1,3 +1,28 @@
+# SimpleDeFiToken
+
+Um token ERC20 básico com mecânica de auto-burn (10% queimado a cada transferência).  
+Este projeto foi desenvolvido em **Hardhat 3**, diferente do projeto anterior feito em versão mais antiga. **O Hardhat 3 ainda está em beta!** (mais detalhes abaixo*)
+
+## Estrutura
+- **contracts/** → Contém o contrato `SimpleDeFiToken.sol`.  
+- **test/** → Testes automatizados em duas camadas:  
+  - Solidity (`SimpleDeFiToken.t.sol`)  
+  - Node.js com **Viem + Ignition** (`SimpleDeFiToken.node.ts`)  
+- **ignition/** → Módulos de deploy (`SimpleDeFiToken.ts`).  
+
+## Funcionalidades
+- Deploy do token via Hardhat Ignition.  
+- Testes rodando tanto em Solidity quanto em Node.js.  
+- Integração com o stack **typescript-node-viem** (sem ethers.js).  
+
+## Como rodar
+```bash
+npm install
+npx hardhat test
+```
+
+## *Abaixo, segue-se o README.md default criado pelo Hardhat
+
 # Sample Hardhat 3 Beta Project (`node:test` and `viem`)
 
 This project showcases a Hardhat 3 Beta project using the native Node.js test runner (`node:test`) and the `viem` library for Ethereum interactions.
