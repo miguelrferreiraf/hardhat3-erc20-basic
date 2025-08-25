@@ -1,7 +1,6 @@
 # Simple DeFi Token
 
-Um token ERC20 básico com mecânica de auto-burn (10% queimado a cada transferência).  
-Este projeto foi desenvolvido em **Hardhat 3**, diferente do projeto anterior feito em versão mais antiga. **O Hardhat 3 ainda está em beta!** (mais detalhes abaixo*)
+Um token ERC20 básico com mecânica de auto-burn (10% queimado a cada transferência). Este projeto foi desenvolvido em **Hardhat 3**, diferente do projeto anterior feito em versão mais antiga. **O Hardhat 3 ainda está em beta!** (mais detalhes abaixo*)
 
 ## Estrutura
 - **contracts/** → Contém o contrato `SimpleDeFiToken.sol`.  
