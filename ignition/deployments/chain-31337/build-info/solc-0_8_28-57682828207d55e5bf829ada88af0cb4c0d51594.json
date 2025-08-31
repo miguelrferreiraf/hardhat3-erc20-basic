@@ -1,0 +1,39 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_28-57682828207d55e5bf829ada88af0cb4c0d51594",
+  "solcVersion": "0.8.28",
+  "solcLongVersion": "0.8.28+commit.7893614a",
+  "userSourceNameMap": {
+    "contracts/SimpleGovernance.sol": "project/contracts/SimpleGovernance.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "cancun",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode",
+            "evm.deployedBytecode",
+            "evm.methodIdentifiers",
+            "metadata"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/SimpleGovernance.sol": {
+        "content": "\r\n// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.0;\r\n\r\ncontract SimpleGovernance { // Início do contrato.\r\n    struct Proposal {\r\n        string description;\r\n        uint yesVotes;\r\n        uint noVotes;\r\n        uint deadline;\r\n        bool executed;\r\n        mapping(address => bool) hasVoted;\r\n    }\r\n    // ESTRUTURA DE UMA PROPOSTA:\r\n    // description: descrição da proposta.\r\n    // yesVotes e noVotes: contadores de votos.\r\n    // deadline: prazo para votar.\r\n    // executed: se a proposta já foi encerrada.\r\n    // hasVoted: impede que um mesmo endereço vote duas vezes.\r\n\r\n    Proposal[] public proposals; // Lista de propostas já criadas.\r\n\r\n    event ProposalCreated(uint proposalId, string description, uint deadline); // Evento para registrar ações no log (útil para frontends).\r\n    event Voted(uint proposalId, address voter, bool vote); // Evento para registrar ações no log (útil para frontends).\r\n    event ProposalExecuted(uint proposalId, bool passed); // Evento para registrar ações no log (útil para frontends).\r\n\r\n    uint public votingDuration = 3 days; // Duração fixa da votação (3 dias).\r\n\r\n    // ----------------- CRIAÇÃO DA PROPOSTA -----------------------------------------------------\r\n    \r\n    function createProposal(string calldata description) external { // Qualquer um pode criar uma proposta.\r\n        Proposal storage newProposal = proposals.push();\r\n        newProposal.description = description;\r\n        newProposal.deadline = block.timestamp + votingDuration;\r\n        emit ProposalCreated(proposals.length - 1, description, newProposal.deadline);\r\n    } // Cria uma nova proposta com o prazo de 3 dias.\r\n\r\n    // ------------------ VOTAR ------------------------------------------------------------------\r\n\r\n    function vote(uint proposalId, bool support) external { // Usuário pode votar a favor (true) ou contra (false).\r\n        Proposal storage proposal = proposals[proposalId];\r\n        require(block.timestamp < proposal.deadline, \"Prazo encerrado\");\r\n        require(!proposal.hasVoted[msg.sender], \"Ja votou\"); // Garante um voto por endereço.\r\n\r\n        proposal.hasVoted[msg.sender] = true;\r\n\r\n        if (support) {\r\n            proposal.yesVotes += 1;\r\n        } else {\r\n            proposal.noVotes += 1;\r\n        } // Conta o voto no campo correto.\r\n\r\n        emit Voted(proposalId, msg.sender, support);\r\n    }\r\n\r\n    // ------------------ EXECUTAR PROPOSTA -------------------------------------------------------\r\n\r\n    function executeProposal(uint proposalId) external { // Pode ser chamado por qualquer pessoa após o prazo.\r\n        Proposal storage proposal = proposals[proposalId];\r\n        require(block.timestamp >= proposal.deadline, \"Ainda em votacao\");\r\n        require(!proposal.executed, \"Ja executada\");\r\n        \r\n        proposal.executed = true; // Marca como encerrada e emite evento dizendo se passou ou não.\r\n        bool passed = proposal.yesVotes > proposal.noVotes;\r\n        emit ProposalExecuted(proposalId, passed);\r\n    }\r\n\r\n    // ------------------- VISUALIZAR PROPOSTA -----------------------------------------------------\r\n    function getProposal(uint proposalId) external view returns (\r\n        string memory description,\r\n        uint yesVotes,\r\n        uint noVotes,\r\n        uint deadline,\r\n        bool executed\r\n    ) {\r\n        Proposal storage p = proposals[proposalId];\r\n        return (p.description, p.yesVotes, p.noVotes, p.deadline, p.executed);\r\n    }\r\n}"
+      }
+    }
+  }
+}
