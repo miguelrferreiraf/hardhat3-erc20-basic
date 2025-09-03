@@ -1,81 +1,42 @@
-# Simple DeFi Token
+# Smart Contracts Vault Monorepo
 
-Um token ERC20 básico com mecânica de auto-burn (10% queimado a cada transferência). Este projeto foi desenvolvido em **Hardhat 3**, diferente do projeto anterior feito em versão mais antiga. **O Hardhat 3 ainda está em beta!** (mais detalhes abaixo*)
+Este repositório é um **monorepo de contratos inteligentes** — um diretório centralizado que concentra diferentes módulos de finanças descentralizadas (DeFi).  
+O objetivo é servir como uma **biblioteca viva**, em constante transformação e expansão, com acréscimos e melhorias contínuas.
 
-## Estrutura
-- **contracts/** → Contém o contrato `SimpleDeFiToken.sol`.  
-- **test/** → Testes automatizados em duas camadas:  
-  - Solidity (`SimpleDeFiToken.t.sol`)  
-  - Node.js com **Viem + Ignition** (`SimpleDeFiToken.node.ts`)  
-- **ignition/** → Módulos de deploy (`SimpleDeFiToken.ts`).  
+Ele tem o nome *vault* porque a maior parte dos contratos aqui disponibilizados são voltados para DeFi, especificamente atividades de vault.
 
-## Funcionalidades
-- Deploy do token via Hardhat Ignition.  
-- Testes rodando tanto em Solidity quanto em Node.js.  
-- Integração com o stack **typescript-node-viem** (sem ethers.js).  
+## 📂 Estrutura Atual
 
-## Como rodar
-```bash
-npm install
-npx hardhat test
-```
+O monorepo contém os seguintes contratos:
 
-## *Abaixo, segue-se o README.md default criado pelo Hardhat
+1. **ERC20: Simple Token**  
+   - Implementação básica de um token fungível ERC20.  
+   - Usado como moeda de referência e meio de interação entre os demais contratos.
 
-# Sample Hardhat 3 Beta Project (`node:test` and `viem`)
+2. **Governance Contract**  
+   - Permite criação e votação de propostas.  
+   - Define a lógica de tomada de decisão descentralizada.  
 
-This project showcases a Hardhat 3 Beta project using the native Node.js test runner (`node:test`) and the `viem` library for Ethereum interactions.
+3. **Swap Contract**  
+   - Funções de troca entre tokens compatíveis.  
+   - Base para interações simples de AMM (Automated Market Maker).  
 
-To learn more about the Hardhat 3 Beta, please visit the [Getting Started guide](https://hardhat.org/docs/getting-started#getting-started-with-hardhat-3). To share your feedback, join our [Hardhat 3 Beta](https://hardhat.org/hardhat3-beta-telegram-group) Telegram group or [open an issue](https://github.com/NomicFoundation/hardhat/issues/new) in our GitHub issue tracker.
+4. **Staking / Yielding Contract**  
+   - Usuários podem bloquear tokens e receber recompensas.  
+   - Mecanismo de incentivo para participação na rede.  
 
-## Project Overview
+5. **Liquidity Pool Contract**  
+   - Gestão de pares de liquidez para swaps.  
+   - Permite fornecimento e retirada de liquidez.  
 
-This example project includes:
+## 🚧 Estado do Projeto
 
-- A simple Hardhat configuration file.
-- Foundry-compatible Solidity unit tests.
-- TypeScript integration tests using [`node:test`](nodejs.org/api/test.html), the new Node.js native test runner, and [`viem`](https://viem.sh/).
-- Examples demonstrating how to connect to different types of networks, including locally simulating OP mainnet.
+- Este repositório está em **desenvolvimento contínuo**.  
+- Novos contratos, melhorias e testes são adicionados regularmente.  
+- A arquitetura é modular para facilitar expansão e integração futura.  
 
-## Usage
+## 🛠️ Stack e Ferramentas
 
-### Running Tests
-
-To run all the tests in the project, execute the following command:
-
-```shell
-npx hardhat test
-```
-
-You can also selectively run the Solidity or `node:test` tests:
-
-```shell
-npx hardhat test solidity
-npx hardhat test nodejs
-```
-
-### Make a deployment to Sepolia
-
-This project includes an example Ignition module to deploy the contract. You can deploy this module to a locally simulated chain or to Sepolia.
-
-To run the deployment to a local chain:
-
-```shell
-npx hardhat ignition deploy ignition/modules/Counter.ts
-```
-
-To run the deployment to Sepolia, you need an account with funds to send the transaction. The provided Hardhat configuration includes a Configuration Variable called `SEPOLIA_PRIVATE_KEY`, which you can use to set the private key of the account you want to use.
-
-You can set the `SEPOLIA_PRIVATE_KEY` variable using the `hardhat-keystore` plugin or by setting it as an environment variable.
-
-To set the `SEPOLIA_PRIVATE_KEY` config variable using `hardhat-keystore`:
-
-```shell
-npx hardhat keystore set SEPOLIA_PRIVATE_KEY
-```
-
-After setting the variable, you can run the deployment with the Sepolia network:
-
-```shell
-npx hardhat ignition deploy --network sepolia ignition/modules/Counter.ts
-```
+- **Solidity** (>=0.8.x)  
+- **Hardhat** para compilação, testes e deploy.  
+- **OpenZeppelin Contracts** como base de segurança e padronização.  
